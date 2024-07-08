@@ -16,10 +16,10 @@ const Navbar = () => {
           className="flex items-center justify-center gap-1.5"
         >
           <Image
-            src="/metamask-icon.svg"
+            src="/metamask-icon.png"
             alt="Metamask logo"
-            width={20}
-            height={20}
+            width={24}
+            height={24}
           />
           {walletAddress.length > 0 ? (
             walletAddress.substring(0, 6) + "..." + walletAddress.substring(38)
