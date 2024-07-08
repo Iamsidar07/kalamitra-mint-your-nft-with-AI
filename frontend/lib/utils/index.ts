@@ -12,12 +12,12 @@ export function getMetadata() {
     openGraph: {
       type: "website",
       locale: "en_US",
-      url: "https://kalamitra.xyz",
+      url: "https://kalamitra-mint-your-nft-with-ai.vercel.app",
       title: "KalaMitra - Mint NFT with AI",
       description: "Generate and mint NFT with AI",
       images: [
         {
-          url: "https://kalamitra.xyz/og.png",
+          url: "https://kalamitra-mint-your-nft-with-ai.vercel.app/og.png",
           width: 1200,
           height: 630,
           alt: "KalaMitra - Mint NFT with AI",
