@@ -1,50 +1,31 @@
-@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap");
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+    --foreground-rgb: 0, 0, 0;
+    --background-start-rgb: 214, 219, 220;
+    --background-end-rgb: 255, 255, 255;
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+    :root {
+        --foreground-rgb: 255, 255, 255;
+        --background-start-rgb: 0, 0, 0;
+        --background-end-rgb: 0, 0, 0;
+    }
 }
-
+* {
+    box-sizing: border-box;
+    @apply font-lexend;
+}
 body {
-  color: rgb(var(--foreground-rgb));
-  /* font-family: "Manrope", sans-serif; */
-  font-optical-sizing: auto;
+    color: rgb(var(--foreground-rgb));
+    font-optical-sizing: auto;
 }
-
-/* .app {
-  width: 100%;
-  height: 100%;
-  filter: contrast(250%) brightness(1000%);
-  background:
-    linear-gradient(
-      to bottom right,
-      rgba(118, 0, 255, 1),
-      rgba(53, 199, 127, 0.82)
-    ),
-    linear-gradient(
-        at var(--mousex) var(--mousey) rgba(255, 255, 255, 0.1),
-        rgba(0, 0, 0, 0.5)
-      )
-      url("data:image/svg+xml,%3Csvg viewBox='0 0 250 250' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-} */
 
 @layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+    .text-balance {
+        text-wrap: balance;
+    }
 }

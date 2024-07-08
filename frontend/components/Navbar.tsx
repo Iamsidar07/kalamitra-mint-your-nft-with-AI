@@ -13,7 +13,7 @@ const Navbar = () => {
         </span>
         <Button
           onClick={walletAddress ? disconnectWallet : connectWalletPressed}
-          className="flex items-center justify-center gap-1.5"
+          className="flex items-center justify-center gap-1.5 cursor-pointer"
         >
           <Image
             src="/metamask-icon.png"

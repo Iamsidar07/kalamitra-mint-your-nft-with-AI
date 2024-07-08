@@ -16,7 +16,7 @@ const Hero = () => {
             width={50}
             height={50}
             quality={100}
-            className="w-6 h-6 md:w-24 md:h-24 object-contain"
+            className="w-6 h-6 sm:w-8 sm:h-8 md:w-24 md:h-24 object-contain"
           />
           <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#9104B3] to-[#3FE7E6] inline-block">
             KalaMitra

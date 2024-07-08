@@ -54,12 +54,12 @@ const Modal = ({
     <dialog
       ref={modalRef}
       className={cn(
-        "w-full bg-zinc-800/30 max-w-5xl mx-auto rounded-2xl backdrop:bg-zinc-800/60 backdrop-blur-xl"
+        "w-full bg-zinc-800/30 max-w-5xl mx-auto rounded-2xl backdrop:bg-zinc-800/60 backdrop-blur-xl",
       )}
     >
       <div className="grid grid-cols-1 sm:grid-cols-2 relative">
         <Image
-          src={nft ? URL.createObjectURL(nft) : "/a.png"}
+          src={nft ? URL.createObjectURL(nft) : "/example1.png"}
           alt="nft"
           fill
           className="object-cover absolute inset-0 -z-10 filter blur-lg"
@@ -72,6 +72,7 @@ const Modal = ({
               alt="nft"
               width={1024}
               height={1024}
+              quality={100}
               className="object-cover rounded-tl-2xl rounded-bl-2xl"
             />
           ) : isImageGenerationLoading ? (
@@ -82,25 +83,12 @@ const Modal = ({
           ) : null}
         </div>
         <div className="gap-4 p-4 text-white filter backdrop-blur flex flex-col relative overflow-hidden">
-          <input
-            placeholder="Cyber Kangaroo"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            className="px-4 py-3 ring-2 ring-zinc-600 bg-transparent w-full rounded-xl outline-none focus-within:brightness-110"
-          />
-          <textarea
-            placeholder="Description of your nft"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            className="resize-none flex-1 px-4 py-3 ring-2 ring-zinc-600 bg-transparent w-full rounded-xl outline-none focus-within:brightness-110"
-            rows={8}
-          />
           <div
             className={cn(
-              "p-5 flex flex-col items-center absolute bottom-0 inset-x-4 bg-zinc-800 ring-4 ring-zinc-600 filter backdrop-blur-xl translate-y-[110%] overflow-hidden h-3/4 rounded-t-2xl shadow z-50 transition-transform",
+              "p-5 flex flex-col items-center absolute bottom-0 inset-x-0 bg-zinc-900/50  filter backdrop-blur-3xl translate-y-[110%] overflow-hidden h-[95%] rounded-t-2xl shadow z-50 transition-transform",
               {
                 "translate-y-0": isMinting,
-              }
+              },
             )}
           >
             {MINTING_STATES.map(({ text, id }, i) => (
@@ -157,15 +145,35 @@ const Modal = ({
               <Confetti run={!mintedNft} width={width} height={height} />
             )}
           </div>
-          {isMinting && <div className="absolute inset-0 bg-zinc-900/80"></div>}
 
-          <Button
-            onClick={onMintPressed}
-            disabled={!nft}
-            className="bg-white w-full bg-opacity-100 text-black"
-          >
-            Mint
-          </Button>
+          {isMinting ? (
+            <div className="absolute inset-0 bg-zinc-900/85 blur-[7rem]"></div>
+          ) : (
+            <>
+              <input
+                placeholder="Cyber Kangaroo"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                className="px-4 py-3 ring-2 ring-zinc-600 bg-transparent w-full rounded-xl outline-none focus-within:brightness-110"
+              />
+              <textarea
+                placeholder="Description of your nft"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                className="resize-none flex-1 px-4 py-3 ring-2 ring-zinc-600 bg-transparent w-full rounded-xl outline-none focus-within:brightness-110"
+                rows={8}
+              />
+              <Button
+                onClick={onMintPressed}
+                disabled={!nft}
+                className={cn("bg-white w-full bg-opacity-100 text-black", {
+                  hidden: isMinting,
+                })}
+              >
+                Mint
+              </Button>
+            </>
+          )}
         </div>
       </div>
     </dialog>
