@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Lexend, Manrope } from "next/font/google";
+import { Lexend } from "next/font/google";
 import "./globals.css";
 import { cn, getMetadata } from "@/lib/utils";
 import Navbar from "@/components/Navbar";
@@ -7,10 +7,10 @@ import { ToastContainer, Bounce } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Web3Provider } from "@/components/web3";
 
-const manrope = Lexend({
+const lexend = Lexend({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700", "800"],
-  variable: "--font-manrope",
+  variable: "--font-lexend",
   display: "swap",
 });
 
@@ -26,7 +26,7 @@ export default function RootLayout({
       <body
         className={cn(
           "bg-black -z-50 relative overflow-x-hidden",
-          manrope.className
+          lexend.className,
         )}
       >
         <Web3Provider>
