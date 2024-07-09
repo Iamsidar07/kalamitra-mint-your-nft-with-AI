@@ -1,7 +1,6 @@
-import { HardhatUserConfig } from "hardhat/config";
 import "@nomicfoundation/hardhat-toolbox";
-import { vars } from "hardhat/config";
 import dotenv from "dotenv";
+import { HardhatUserConfig, vars } from "hardhat/config";
 dotenv.config();
 
 const url = vars.get("ALCHEMY_RPC_URL");

@@ -1,11 +1,10 @@
 "use client";
 
-import { useEffect, useState, createContext, useContext } from "react";
-import { ethers, formatEther } from "ethers";
-import { Contract } from "ethers";
+import { Contract, ethers, formatEther } from "ethers";
+import { createContext, useContext, useEffect, useState } from "react";
 
-import contractAbi from "../contract-abi.json";
 import { toast } from "react-toastify";
+import contractAbi from "../contract-abi.json";
 export const CONTRACT_ADDRESS = "0x802C74992CC35006DC5b76287D5245009f58835A";
 
 interface IWeb3Context {

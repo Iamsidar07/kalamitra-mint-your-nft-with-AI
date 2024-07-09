@@ -1,15 +1,15 @@
 "use client";
-import React from "react";
-import Confetti from "react-confetti";
-import Button from "./Button";
-import Image from "next/image";
-import { GoLinkExternal } from "react-icons/go";
-import { toast } from "react-toastify";
-import { LuLoader2 } from "react-icons/lu";
-import { IoCheckmarkDone } from "react-icons/io5";
 import { MINTING_STATES } from "@/constants";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
+import React from "react";
+import Confetti from "react-confetti";
+import { GoLinkExternal } from "react-icons/go";
+import { IoCheckmarkDone } from "react-icons/io5";
+import { LuLoader2 } from "react-icons/lu";
+import { toast } from "react-toastify";
 import { useWindowSize } from "react-use";
+import Button from "./Button";
 import { CONTRACT_ADDRESS } from "./web3";
 
 interface MintingState {

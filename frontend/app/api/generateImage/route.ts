@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 
-
 export const POST = async (req: NextRequest) => {
   const { prompt } = await req.json();
   const formData = new FormData();
@@ -20,14 +19,20 @@ export const POST = async (req: NextRequest) => {
     );
 
     const data = await response.json();
-    console.log("data",data);
-    return NextResponse.json({
-      success: true,
-      image: data.image,
-      message: "Your nft is ready to mint",
-    }, {status: 200});
+    console.log("data", data);
+    return NextResponse.json(
+      {
+        success: true,
+        image: data.image,
+        message: "Your nft is ready to mint",
+      },
+      { status: 200 },
+    );
   } catch (error: any) {
     console.log(error);
-    return NextResponse.json({ success: false, message: error.message }, {status: 200});
+    return NextResponse.json(
+      { success: false, message: error.message },
+      { status: 200 },
+    );
   }
 };

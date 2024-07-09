@@ -1,10 +1,8 @@
 "use client";
-import Image from "next/image";
 import React from "react";
-import Button from "./Button";
-import { BiImage } from "react-icons/bi";
-import { FaImage } from "react-icons/fa";
 import { BsStars } from "react-icons/bs";
+import { FaImage } from "react-icons/fa";
+import Button from "./Button";
 
 interface FormFieldProps {
   handleImageChange: (e: React.ChangeEvent<HTMLInputElement>) => Promise<void>;

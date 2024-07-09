@@ -1,5 +1,4 @@
 import { PROMPT_EXAMPLES } from "@/constants";
-import React from "react";
 import PromptExampleItem from "./PromptExampleItem";
 
 const ExamplePrompts = () => {

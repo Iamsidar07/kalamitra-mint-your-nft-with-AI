@@ -1,32 +1,25 @@
 "use client";
 
-import { ChangeEvent, useEffect, useRef, useState } from "react";
-import useWeb3, { CONTRACT_ADDRESS } from "@/components/web3";
-import { toast } from "react-toastify";
-import Faq from "@/components/Faq";
-import { PROMPTS } from "@/constants";
-import Footer from "@/components/Footer";
-import Features from "@/components/Featuers";
-import FormField from "@/components/FormField";
-import Hero from "@/components/Hero";
 import ExamplePrompts from "@/components/ExamplePrompts";
+import Faq from "@/components/Faq";
+import Features from "@/components/Featuers";
+import Footer from "@/components/Footer";
+import FormField from "@/components/FormField";
+import Gradients from "@/components/Gradients";
+import Hero from "@/components/Hero";
 import Modal from "@/components/Modal";
+import useWeb3, { CONTRACT_ADDRESS } from "@/components/web3";
+import { PROMPTS } from "@/constants";
 import { handleMintPressed } from "@/lib/contractInteraction";
 import { handleGenerateImage } from "@/lib/deepai";
-import Gradients from "@/components/Gradients";
+import { IMintingState } from "@/typing";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
+import { toast } from "react-toastify";
 
 declare global {
   interface Window {
     ethereum?: any;
   }
-}
-
-export interface IMintingState {
-  uploading: boolean;
-  generatingMetadata: boolean;
-  uploadingMetadata: boolean;
-  mintingNft: boolean;
-  importingNft: boolean;
 }
 
 export default function Home() {

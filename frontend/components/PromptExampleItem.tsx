@@ -1,7 +1,7 @@
 import Image from "next/image";
-import Button from "./Button";
 import { MdOutlineContentCopy } from "react-icons/md";
 import { toast } from "react-toastify";
+import Button from "./Button";
 
 interface PromptExampleItemProps {
   imageUrl: string;

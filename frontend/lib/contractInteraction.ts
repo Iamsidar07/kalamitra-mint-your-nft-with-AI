@@ -1,7 +1,7 @@
+import { IMintingState } from "@/typing";
 import { ethers } from "ethers";
-import { getNftMetadataUri } from "./deepai";
 import { toast } from "react-toastify";
-import { IMintingState } from "@/app/page";
+import { getNftMetadataUri } from "./deepai";
 
 export const handleMintPressed = async ({
   contract,

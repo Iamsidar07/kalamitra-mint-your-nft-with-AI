@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 import Image from "next/image";
-import React from "react";
+
 interface FeatureItemProps {
   title: string;
   description: string;
@@ -9,6 +9,7 @@ interface FeatureItemProps {
   tagline: string;
   gradient?: string;
 }
+
 const FeatureItem = ({
   title,
   tagline,

@@ -1,4 +1,4 @@
-import { IMintingState } from "@/app/page";
+import { IMintingState } from "@/typing";
 import axios from "axios";
 import { ethers } from "ethers";
 import { toast } from "react-toastify";

@@ -1,6 +1,5 @@
-import { NextRequest, NextResponse } from "next/server";
 import { GoogleGenerativeAI } from "@google/generative-ai";
-import fs from "fs";
+import { NextRequest, NextResponse } from "next/server";
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
 
@@ -17,7 +16,7 @@ async function uploadToIPFS(file: File) {
           pinata_secret_api_key: process.env.PINATA_API_SECRET_KEY!,
         },
         body: form,
-      }
+      },
     );
     const data = await response.json();
     return data.IpfsHash;
@@ -42,7 +41,7 @@ async function uploadMetadataToIPFS(metadata: any) {
           pinataContent: metadata,
           pinataMetadata: { name: new Date().toLocaleTimeString() },
         }),
-      }
+      },
     );
     const data = await response.json();
     return data.IpfsHash;
