@@ -2,6 +2,9 @@
 import Image from "next/image";
 import React from "react";
 import Button from "./Button";
+import { BiImage } from "react-icons/bi";
+import { FaImage } from "react-icons/fa";
+import { BsStars } from "react-icons/bs";
 
 interface FormFieldProps {
   handleImageChange: (e: React.ChangeEvent<HTMLInputElement>) => Promise<void>;
@@ -28,13 +31,7 @@ const FormField = ({
             htmlFor="uploadImage"
             className="bg-white bg-opacity-60 p-1.5 sm:px-4 sm:py-3 rounded-lg grid place-items-center cursor-pointer"
           >
-            <Image
-              src="/upload.png"
-              alt="upload"
-              width={20}
-              height={20}
-              className="opacity-80"
-            />
+            <FaImage className="opacity-80 w-5 h-5 text-black" />
           </label>
           <input
             type="file"
@@ -54,7 +51,7 @@ const FormField = ({
             onClick={handleSupriseMe}
             className="grid place-items-center bg-white cursor-pointer hover:brightness-125 p-1.5 sm:px-4 sm:py-3"
           >
-            <Image src="/suprise.png" alt="magic" width={20} height={20} />
+            <BsStars className="opacity-80 text-black w-5 h-5" />
           </Button>
         </div>
         <Button

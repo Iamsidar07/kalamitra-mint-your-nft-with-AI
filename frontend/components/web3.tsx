@@ -5,10 +5,12 @@ import { ethers, formatEther } from "ethers";
 import { Contract } from "ethers";
 
 import contractAbi from "../contract-abi.json";
+import { toast } from "react-toastify";
 export const CONTRACT_ADDRESS = "0x802C74992CC35006DC5b76287D5245009f58835A";
 
 interface IWeb3Context {
   status: string;
+  provider: ethers.BrowserProvider | null;
   setStatus: (status: string) => void;
   walletAddress: string;
   contract: Contract | null;
@@ -29,6 +31,7 @@ const web3Context = createContext<IWeb3Context>({
   connectWalletPressed: () => Promise.resolve(),
   disconnectWallet: () => {},
   currentTokenId: 0,
+  provider: null,
 });
 
 const useWeb3 = () => {
@@ -52,9 +55,29 @@ export const Web3Provider = ({ children }: { children: React.ReactNode }) => {
     setProvider(provider);
   }
 
+  const handleMintEvent = (
+    tokenId: number,
+    by: string,
+    event: ethers.EventLog,
+  ) => {
+    console.log(event);
+    toast.info(
+      `${by.substring(0, 6) + "..." + by.substring(38)} minted #${tokenId}`,
+    );
+  };
+
   useEffect(() => {
     initializeWeb3();
   }, []);
+
+  // event listeners
+  useEffect(() => {
+    if (!contract) return;
+    contract.on("NftMinted", handleMintEvent);
+    return () => {
+      contract.off("NftMinted", handleMintEvent);
+    };
+  }, [contract]);
 
   const disconnectWallet = async () => {
     setWalletAddress("");
@@ -84,8 +107,8 @@ export const Web3Provider = ({ children }: { children: React.ReactNode }) => {
       formatEther(
         isInAllowList
           ? await contractInstace.allowListMintNftPrice()
-          : await contractInstace.publicMintNftPrice()
-      )
+          : await contractInstace.publicMintNftPrice(),
+      ),
     );
     setCurrentTokenId(await contractInstace.getCurrentTokeId());
   };
@@ -93,6 +116,7 @@ export const Web3Provider = ({ children }: { children: React.ReactNode }) => {
   return (
     <web3Context.Provider
       value={{
+        provider,
         status,
         setStatus,
         walletAddress,

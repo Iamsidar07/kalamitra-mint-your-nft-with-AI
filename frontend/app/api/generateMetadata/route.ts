@@ -3,6 +3,15 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
 
+function parseOutput(rawJson: string) {
+  let jsonString = "";
+  if (rawJson.includes("```json")) {
+    jsonString = rawJson.replaceAll("```", "");
+    jsonString = jsonString.replace("json", "");
+  }
+  return JSON.parse(jsonString);
+}
+
 export const POST = async (request: NextRequest) => {
   const formData = await request.formData();
   const file = formData.get("file") as File;
@@ -13,7 +22,7 @@ export const POST = async (request: NextRequest) => {
         success: false,
         message: "Fields are required",
       },
-      { status: 400 }
+      { status: 400 },
     );
   }
   const prompt = `Please analyze the given NFT image and provide the metadata in the following object format:
@@ -39,13 +48,13 @@ export const POST = async (request: NextRequest) => {
       ]
      }
     <OUTPUT>
-    Include 5 trait_type property. Do not mention that it is an json.
+    Include 5 trait_type property.
     `;
   const model = genAI.getGenerativeModel(
     { model: "gemini-1.5-flash-latest" },
     {
       timeout: 3 * 60 * 100,
-    }
+    },
   );
 
   const image = {
@@ -56,13 +65,14 @@ export const POST = async (request: NextRequest) => {
   };
   try {
     const result = await model.generateContent([prompt, image]);
-    const metadata = JSON.parse(result.response.text());
+    const rawJsonAsString = result.response.text();
+    const metadata = parseOutput(rawJsonAsString);
     return NextResponse.json(
       {
         metadata: { name: file.name, image: "ipfs://" + ipfsHash, ...metadata },
         success: true,
       },
-      { status: 200 }
+      { status: 200 },
     );
   } catch (error: any) {
     console.log("Failed to get metadata", error);
@@ -71,7 +81,7 @@ export const POST = async (request: NextRequest) => {
         success: false,
         message: error.message,
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 };

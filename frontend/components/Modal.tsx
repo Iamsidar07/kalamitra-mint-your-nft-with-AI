@@ -86,7 +86,7 @@ const Modal = ({
         <div className="gap-4 p-4 text-white filter backdrop-blur flex flex-col relative overflow-hidden">
           <div
             className={cn(
-              "p-5 flex flex-col items-center absolute bottom-0 inset-x-0 bg-zinc-900/50  filter backdrop-blur-3xl translate-y-[110%] overflow-hidden h-[95%] rounded-t-2xl shadow z-50 transition-transform",
+              "p-5 flex flex-col absolute bottom-0 inset-x-0 bg-zinc-900/50  filter backdrop-blur-3xl translate-y-[110%] overflow-hidden h-[95%] rounded-t-2xl shadow z-50 transition-transform",
               {
                 "translate-y-0": isMinting,
               },
@@ -95,12 +95,12 @@ const Modal = ({
             {MINTING_STATES.map(({ text, id }, i) => (
               <div
                 key={id}
-                className="flex items-center justify-center gap-2 font-bold text-lg text-zinc-500"
+                className="flex items-center gap-2 font-bold text-lg text-zinc-500"
               >
                 {mintingState[id as keyof typeof mintingState] ? (
                   <LuLoader2 className="opacity-80 animate-spin" />
                 ) : (
-                  <IoCheckmarkDone className="text-cyan-700" />
+                  <IoCheckmarkDone className="text-zinc-700" />
                 )}
                 <p>{text}</p>
               </div>
@@ -148,7 +148,7 @@ const Modal = ({
           </div>
 
           {isMinting ? (
-            <div className="absolute inset-0 bg-zinc-900/85 blur-[7rem]"></div>
+            <div className="absolute inset-0 bg-zinc-900/35 blur-[17rem]"></div>
           ) : (
             <>
               <input

@@ -1,7 +1,7 @@
 "use client";
 
 import { ChangeEvent, useEffect, useRef, useState } from "react";
-import useWeb3 from "@/components/web3";
+import useWeb3, { CONTRACT_ADDRESS } from "@/components/web3";
 import { toast } from "react-toastify";
 import Faq from "@/components/Faq";
 import { PROMPTS } from "@/constants";
@@ -19,6 +19,14 @@ declare global {
   interface Window {
     ethereum?: any;
   }
+}
+
+export interface IMintingState {
+  uploading: boolean;
+  generatingMetadata: boolean;
+  uploadingMetadata: boolean;
+  mintingNft: boolean;
+  importingNft: boolean;
 }
 
 export default function Home() {
@@ -39,11 +47,12 @@ export default function Home() {
   const [transactionHash, setTransactionHash] = useState("");
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [mintingState, setMintingState] = useState({
+  const [mintingState, setMintingState] = useState<IMintingState>({
     uploading: false,
     generatingMetadata: false,
     uploadingMetadata: false,
     mintingNft: false,
+    importingNft: false,
   });
   const [mintedNft, setMintedNft] = useState(false);
 
@@ -106,6 +115,37 @@ export default function Home() {
     setPrompt(PROMPTS[Math.floor(Math.random() * PROMPTS.length)]);
   };
 
+  const importNftToMetamask = async () => {
+    try {
+      const wasAdded = await window.ethereum.request({
+        method: "wallet_watchAsset",
+        params: {
+          type: "ERC721",
+          options: {
+            address: CONTRACT_ADDRESS,
+            tokenId: currentTokenId.toString(),
+          },
+        },
+      });
+
+      if (wasAdded) {
+        toast.success("User successfully added the token!");
+      } else {
+        toast.error("User did not add the token.");
+      }
+    } catch (error) {
+      toast.error("Failed to import nft in your wallet");
+      throw error;
+    } finally {
+      setMintingState((prev) => ({
+        ...prev,
+        importingNft: false,
+        mintingNft: false,
+      }));
+      setIsMinting(false);
+    }
+  };
+
   const onMintPressed = async () => {
     if (!contract || !nft) {
       toast.info("Please connect your metamask.");
@@ -125,6 +165,7 @@ export default function Home() {
       name,
       description,
     });
+    await importNftToMetamask();
   };
 
   return (

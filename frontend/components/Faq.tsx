@@ -45,7 +45,7 @@ const Faq = () => {
               >
                 <h3 className="font-bold text-base sm:text-lg">{question}</h3>{" "}
                 <FiChevronDown
-                  className={cn("w-4 h-4 ansition-transform", {
+                  className={cn("w-4 h-4 transition-transform", {
                     "rotate-180": showFaq,
                   })}
                 />{" "}

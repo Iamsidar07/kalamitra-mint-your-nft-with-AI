@@ -10,6 +10,7 @@ export const MINTING_STATES = [
   { text: "Generate metadata for the nft", id: "generatingMetadata" },
   { text: "Upload the metadata on pinata", id: "uploadingMetadata" },
   { text: "Please wait for transaction to complete", id: "mintingNft" },
+  { text: "Importing your NFT into your wallet", id: "importingNft" },
 ];
 
 export const PROMPT_EXAMPLES = [

@@ -1,13 +1,7 @@
+import { IMintingState } from "@/app/page";
 import axios from "axios";
 import { ethers } from "ethers";
 import { toast } from "react-toastify";
-
-export interface MintingState {
-  uploading: boolean;
-  generatingMetadata: boolean;
-  uploadingMetadata: boolean;
-  mintingNft: boolean;
-}
 
 export const getNftMetadataUri = async ({
   mintFile,
@@ -18,7 +12,7 @@ export const getNftMetadataUri = async ({
 }: {
   mintFile: File;
   setStatus: (status: string) => void;
-  setMintingState: React.Dispatch<React.SetStateAction<MintingState>>;
+  setMintingState: React.Dispatch<React.SetStateAction<IMintingState>>;
   name: string;
   description: string;
 }) => {
@@ -33,7 +27,6 @@ export const getNftMetadataUri = async ({
     setMintingState((prev) => ({ ...prev, uploading: false }));
     formData.append("ipfsHash", ipfsHash);
     // generateMetadata
-    //
     setStatus("Generating nft metadata");
     setMintingState((prev) => ({ ...prev, generatingMetadata: true }));
     const { metadata } = await generateMetadata(formData);
@@ -47,9 +40,8 @@ export const getNftMetadataUri = async ({
     };
     setStatus("Uploading nft metadata to pinata");
     setMintingState((prev) => ({ ...prev, uploadingMetadata: true }));
-    const { ipfsHash: metadataIpfsHash } = await uploadMetadata(
-      generatedMetadata
-    );
+    const { ipfsHash: metadataIpfsHash } =
+      await uploadMetadata(generatedMetadata);
     setMintingState((prev) => ({ ...prev, uploadingMetadata: false }));
     const uri = "ipfs://" + metadataIpfsHash;
     return uri;
@@ -66,7 +58,10 @@ const uploadToPinata = async (formData: FormData) => {
       method: "POST",
       body: formData,
     });
-    return await res.json();
+    if (res.status == 200) {
+      return await res.json();
+    }
+    throw new Error("Failed to uploadToIPFS");
   } catch (error) {
     console.log(error);
     toast.error("Failed to upload to pinata.");
@@ -80,7 +75,10 @@ const generateMetadata = async (formData: FormData) => {
       method: "POST",
       body: formData,
     });
-    return await res.json();
+    if (res.status == 200) {
+      return await res.json();
+    }
+    throw new Error("Failed to generate metadata");
   } catch (error) {
     console.log(error);
     toast.error("Failed to generate Metadata");
@@ -94,7 +92,10 @@ const uploadMetadata = async (metadata: any) => {
       method: "POST",
       body: JSON.stringify({ metadata }),
     });
-    return await res.json();
+    if (res.status == 200) {
+      return await res.json();
+    }
+    throw new Error("Failed to upload metadata");
   } catch (error) {
     console.log(error);
     toast.error("Failed to upload metadata.");

@@ -1,6 +1,7 @@
 import { ethers } from "ethers";
-import { MintingState, getNftMetadataUri } from "./deepai";
+import { getNftMetadataUri } from "./deepai";
 import { toast } from "react-toastify";
+import { IMintingState } from "@/app/page";
 
 export const handleMintPressed = async ({
   contract,
@@ -18,7 +19,7 @@ export const handleMintPressed = async ({
 }: {
   contract: ethers.Contract;
   nft: File;
-  setMintingState: React.Dispatch<React.SetStateAction<MintingState>>;
+  setMintingState: React.Dispatch<React.SetStateAction<IMintingState>>;
   setIsMinting: React.Dispatch<React.SetStateAction<boolean>>;
   setStatus: (status: string) => void;
   setTransactionHash: React.Dispatch<React.SetStateAction<string>>;
@@ -30,6 +31,13 @@ export const handleMintPressed = async ({
   description: string;
 }) => {
   setIsMinting(true);
+  setMintingState({
+    generatingMetadata: true,
+    mintingNft: true,
+    uploading: true,
+    uploadingMetadata: true,
+    importingNft: true,
+  });
   try {
     const uri = await getNftMetadataUri({
       mintFile: nft,
@@ -39,13 +47,6 @@ export const handleMintPressed = async ({
       description,
     });
 
-    setMintingState({
-      generatingMetadata: true,
-      mintingNft: true,
-      uploading: true,
-      uploadingMetadata: true,
-    });
-
     const tx = isInsideAllowList
       ? await contract.allowListMint(walletAddress, uri, {
           value: ethers.parseEther(price),
@@ -53,16 +54,13 @@ export const handleMintPressed = async ({
       : await contract.publicMint(walletAddress, uri, {
           value: ethers.parseEther(price),
         });
-    setTransactionHash(tx.hash);
-    await tx.wait();
+
     setStatus("Wait for transaction to complete " + tx.hash);
-    await tx.wait();
+    const receipt = await tx.wait();
+    setTransactionHash(receipt.hash);
     setMintedNft(true);
   } catch (error) {
     console.log("error", error);
     toast.error("Failed to mint your nft");
-  } finally {
-    setIsMinting(false);
-    setMintingState((prev) => ({ ...prev, mintingNft: false }));
   }
 };

@@ -4,8 +4,8 @@ import "./globals.css";
 import { cn, getMetadata } from "@/lib/utils";
 import Navbar from "@/components/Navbar";
 import { ToastContainer, Bounce } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { Web3Provider } from "@/components/web3";
+import "react-toastify/dist/ReactToastify.css";
 
 const lexend = Lexend({
   subsets: ["latin"],

@@ -25,7 +25,7 @@ const PromptExampleItem = ({
         alt={name}
         width={200}
         height={200}
-        className="object-cover w-full aspect-square"
+        className="object-cover w-full sm:w-[250px]"
       />
       <div className="h-full relative space-y-2">
         <h3 className="text-base md:text-lg">{name}</h3>
