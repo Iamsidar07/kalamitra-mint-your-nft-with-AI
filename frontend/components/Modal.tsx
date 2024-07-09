@@ -34,6 +34,7 @@ interface ModalProps {
   nft: File | null;
   mintedNft: boolean;
 }
+
 const Modal = ({
   currentTokenId,
   description,
@@ -153,13 +154,19 @@ const Modal = ({
               <input
                 placeholder="Cyber Kangaroo"
                 value={name}
-                onChange={(e) => setName(e.target.value)}
+                onChange={(e) => {
+                  setName(e.target.value);
+                  e.stopPropagation();
+                }}
                 className="px-4 py-3 ring-2 ring-zinc-600 bg-transparent w-full rounded-xl outline-none focus-within:brightness-110"
               />
               <textarea
                 placeholder="Description of your nft"
                 value={description}
-                onChange={(e) => setDescription(e.target.value)}
+                onChange={(e) => {
+                  setDescription(e.target.value);
+                  e.stopPropagation();
+                }}
                 className="resize-none flex-1 px-4 py-3 ring-2 ring-zinc-600 bg-transparent w-full rounded-xl outline-none focus-within:brightness-110"
                 rows={8}
               />

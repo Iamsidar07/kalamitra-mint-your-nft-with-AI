@@ -13,6 +13,7 @@ import ExamplePrompts from "@/components/ExamplePrompts";
 import Modal from "@/components/Modal";
 import { handleMintPressed } from "@/lib/contractInteraction";
 import { handleGenerateImage } from "@/lib/deepai";
+import Gradients from "@/components/Gradients";
 
 declare global {
   interface Window {
@@ -70,7 +71,7 @@ export default function Home() {
       // eslint-disable-next-line react-hooks/exhaustive-deps
       modalRef.current?.removeEventListener("click", handleClickOutside);
     };
-  });
+  }, [modalRef]);
 
   useEffect(() => {
     if (status) {
@@ -127,7 +128,7 @@ export default function Home() {
   };
 
   return (
-    <div className="w-full min-h-screen flex flex-col justify-center py-24 max-w-5xl mx-auto">
+    <div className="w-full min-h-screen flex flex-col justify-center py-24 max-w-7xl mx-auto">
       <Hero />
       <FormField
         handleGenerateImage={onGenerateImagePressed}
@@ -141,7 +142,6 @@ export default function Home() {
       <Features />
       <Faq />
       <Footer />
-
       <Modal
         isMinting={isMinting}
         transactionHash={transactionHash}
@@ -157,11 +157,7 @@ export default function Home() {
         nft={nft}
         mintedNft={mintedNft}
       />
-
-      {/* Gradient backgrounds */}
-      <div className="absolute -top-12 -left-32 -z-10 w-[25rem] h-[35rem] rounded-full bg-[#9104B3] filter blur-[25rem]" />
-      <div className="absolute right-0 sm:-right-[5%] -z-10 w-96 h-96 rounded-full bg-[#3FE7E6] filter blur-[25rem] " />
-      <div className="absolute bottom-0 inset-x-0 h-1  bg-gradient-to-r from-violet-600 to-cyan-500" />
+      <Gradients />
     </div>
   );
 }
