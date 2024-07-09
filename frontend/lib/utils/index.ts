@@ -28,9 +28,9 @@ export function getMetadata() {
       card: "summary_large_image",
       images: [
         {
-          url: "https://kalamitra-mint-your-nft-with-ai.vercel.app",
-          width: 1200,
-          height: 630,
+          url: "https://kalamitra-mint-your-nft-with-ai.vercel.app/og.png",
+          width: 511,
+          height: 288,
           alt: "KalaMitra - Mint NFT with AI",
         },
       ],

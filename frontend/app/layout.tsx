@@ -26,7 +26,7 @@ export default function RootLayout({
       <body
         className={cn(
           "bg-black -z-50 relative overflow-x-hidden",
-          lexend.className
+          lexend.className,
         )}
       >
         <Web3Provider>
