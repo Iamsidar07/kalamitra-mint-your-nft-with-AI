@@ -22,5 +22,19 @@ export function getMetadata() {
         },
       ],
     },
+    twitter: {
+      title: "KalaMitra - Mint NFT with AI",
+      description: "Generate and mint NFT with AI",
+      card: "summary_large_image",
+      images: [
+        {
+          url: "https://kalamitra-mint-your-nft-with-ai.vercel.app",
+          width: 1200,
+          height: 630,
+          alt: "KalaMitra - Mint NFT with AI",
+        },
+      ],
+    },
+    manifest: "/manifest.json",
   };
 }
