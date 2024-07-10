@@ -45,7 +45,7 @@ contract AssassinNFT is
 
     constructor(
         address[] memory _allowList
-    ) ERC721("AssassinNFT", "ANFT") Ownable(msg.sender) {
+    ) ERC721("Assassin", "ASS") Ownable(msg.sender) {
         for (uint i; i < _allowList.length; i++) {
             allowList[_allowList[i]] = true;
         }
@@ -66,12 +66,12 @@ contract AssassinNFT is
     function editNftPrice(
         uint256 _publicMintNftPrice,
         uint256 _allowListMintNftPrice
-    ) external onlyOwner {
+    ) public onlyOwner {
         publicMintNftPrice = _publicMintNftPrice;
         allowListMintNftPrice = _allowListMintNftPrice;
     }
 
-    function withdraw() external onlyOwner {
+    function withdraw() public onlyOwner {
         (bool success, ) = payable(msg.sender).call{
             value: address(this).balance
         }("");
@@ -81,7 +81,7 @@ contract AssassinNFT is
     function editMintOpen(
         bool _isPublicMintOpen,
         bool _isAllowListMintOpen
-    ) external onlyOwner {
+    ) public onlyOwner {
         isPublicMintOpen = _isPublicMintOpen;
         isAllowListMintOpen = _isAllowListMintOpen;
     }

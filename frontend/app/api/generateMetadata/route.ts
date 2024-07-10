@@ -66,10 +66,12 @@ export const POST = async (request: NextRequest) => {
   try {
     const result = await model.generateContent([prompt, image]);
     const rawJsonAsString = result.response.text();
+    console.log({ rawJsonAsString });
     const metadata = parseOutput(rawJsonAsString);
+    console.log({ metadata });
     return NextResponse.json(
       {
-        metadata: { name: file.name, image: "ipfs://" + ipfsHash, ...metadata },
+        metadata: { image: "ipfs://" + ipfsHash, ...metadata },
         success: true,
       },
       { status: 200 },

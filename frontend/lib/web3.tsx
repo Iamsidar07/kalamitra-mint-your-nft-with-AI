@@ -5,7 +5,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 
 import { toast } from "react-toastify";
 import contractAbi from "../contract-abi.json";
-export const CONTRACT_ADDRESS = "0x802C74992CC35006DC5b76287D5245009f58835A";
+import { CONTRACT_ADDRESS } from "@/constants";
 
 interface IWeb3Context {
   status: string;
@@ -48,7 +48,6 @@ export const Web3Provider = ({ children }: { children: React.ReactNode }) => {
   const [currentTokenId, setCurrentTokenId] = useState(0);
 
   async function initializeWeb3() {
-    console.log("initializeWeb3");
     if (!window.ethereum) return;
     const provider = new ethers.BrowserProvider(window.ethereum);
     setProvider(provider);
@@ -97,19 +96,22 @@ export const Web3Provider = ({ children }: { children: React.ReactNode }) => {
     const address = await newAccount.getAddress();
     setWalletAddress(address);
     const signer = await provider.getSigner();
-    const contractInstace = new Contract(CONTRACT_ADDRESS, contractAbi, signer);
-    setContract(contractInstace);
-    const isInAllowList = await contractInstace.allowList(address);
-    console.log("isInAllowList", isInAllowList);
+    const contractInstance = new Contract(
+      CONTRACT_ADDRESS,
+      contractAbi,
+      signer,
+    );
+    setContract(contractInstance);
+    const isInAllowList = await contractInstance.allowList(address);
     setIsInsideAllowList(isInAllowList);
     setPrice(
       formatEther(
         isInAllowList
-          ? await contractInstace.allowListMintNftPrice()
-          : await contractInstace.publicMintNftPrice(),
+          ? await contractInstance.allowListMintNftPrice()
+          : await contractInstance.publicMintNftPrice(),
       ),
     );
-    setCurrentTokenId(await contractInstace.getCurrentTokeId());
+    setCurrentTokenId(await contractInstance.getCurrentTokenId());
   };
 
   return (

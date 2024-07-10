@@ -501,7 +501,7 @@
   },
   {
     "inputs": [],
-    "name": "getCurrentTokeId",
+    "name": "getCurrentTokenId",
     "outputs": [
       {
         "internalType": "uint256",
@@ -880,6 +880,13 @@
   {
     "inputs": [],
     "name": "unpause",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "withdraw",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"

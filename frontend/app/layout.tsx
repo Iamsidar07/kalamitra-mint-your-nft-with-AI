@@ -1,5 +1,5 @@
 import Navbar from "@/components/Navbar";
-import { Web3Provider } from "@/components/web3";
+import { Web3Provider } from "@/lib/web3";
 import { cn, getMetadata } from "@/lib/utils";
 import type { Metadata } from "next";
 import { Lexend } from "next/font/google";

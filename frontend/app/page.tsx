@@ -8,13 +8,15 @@ import FormField from "@/components/FormField";
 import Gradients from "@/components/Gradients";
 import Hero from "@/components/Hero";
 import Modal from "@/components/Modal";
-import useWeb3, { CONTRACT_ADDRESS } from "@/components/web3";
-import { PROMPTS } from "@/constants";
+import { CONTRACT_ADDRESS, PROMPTS } from "@/constants";
 import { handleMintPressed } from "@/lib/contractInteraction";
 import { handleGenerateImage } from "@/lib/deepai";
+import useWeb3 from "@/lib/web3";
 import { IMintingState } from "@/typing";
 import { ChangeEvent, useEffect, useRef, useState } from "react";
+import Confetti from "react-confetti";
 import { toast } from "react-toastify";
+import { useWindowSize } from "react-use";
 
 declare global {
   interface Window {
@@ -32,6 +34,7 @@ export default function Home() {
     isInsideAllowList,
     currentTokenId,
   } = useWeb3();
+  const { width, height } = useWindowSize();
   const [prompt, setPrompt] = useState("");
   const [nft, setNft] = useState<File | null>(null);
   const [isImageGenerationLoading, setIsImageGenerationLoading] =
@@ -47,8 +50,8 @@ export default function Home() {
     mintingNft: false,
     importingNft: false,
   });
-  const [mintedNft, setMintedNft] = useState(false);
-
+  const [hasMintedNft, setHasMintedNft] = useState(false);
+  const [showConfetti, setShowConfetti] = useState(false);
   const modalRef = useRef<HTMLDialogElement>(null);
 
   function handleClickOutside(event: any) {
@@ -123,6 +126,11 @@ export default function Home() {
 
       if (wasAdded) {
         toast.success("User successfully added the token!");
+        setHasMintedNft(true);
+        setShowConfetti(true);
+        setTimeout(() => {
+          setShowConfetti(false);
+        }, 1500);
       } else {
         toast.error("User did not add the token.");
       }
@@ -154,7 +162,6 @@ export default function Home() {
       walletAddress,
       price,
       isInsideAllowList,
-      setMintedNft,
       name,
       description,
     });
@@ -163,6 +170,11 @@ export default function Home() {
 
   return (
     <div className="w-full min-h-screen flex flex-col justify-center py-24 max-w-7xl mx-auto">
+      {showConfetti ? (
+        <div className="w-full h-3/4 mx-auto max-w-lg">
+          <Confetti width={width} height={height} />
+        </div>
+      ) : null}
       <Hero />
       <FormField
         handleGenerateImage={onGenerateImagePressed}
@@ -189,7 +201,7 @@ export default function Home() {
         modalRef={modalRef}
         onMintPressed={onMintPressed}
         nft={nft}
-        mintedNft={mintedNft}
+        mintedNft={hasMintedNft}
       />
       <Gradients />
     </div>

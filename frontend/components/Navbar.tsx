@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import Button from "./Button";
-import useWeb3 from "./web3";
+import useWeb3 from "@/lib/web3";
 
 const Navbar = () => {
   const { connectWalletPressed, walletAddress, disconnectWallet } = useWeb3();

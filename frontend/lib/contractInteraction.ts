@@ -13,7 +13,6 @@ export const handleMintPressed = async ({
   walletAddress,
   price,
   isInsideAllowList,
-  setMintedNft,
   name,
   description,
 }: {
@@ -26,7 +25,6 @@ export const handleMintPressed = async ({
   walletAddress: string;
   price: string;
   isInsideAllowList: boolean;
-  setMintedNft: React.Dispatch<React.SetStateAction<boolean>>;
   name: string;
   description: string;
 }) => {
@@ -58,7 +56,6 @@ export const handleMintPressed = async ({
     setStatus("Wait for transaction to complete " + tx.hash);
     const receipt = await tx.wait();
     setTransactionHash(receipt.hash);
-    setMintedNft(true);
   } catch (error) {
     console.log("error", error);
     toast.error("Failed to mint your nft");

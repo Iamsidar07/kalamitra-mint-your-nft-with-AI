@@ -1,3 +1,5 @@
+export const CONTRACT_ADDRESS = "0x11d248fe150ac3D33C09b25bD64D515c9e93eb61";
+
 export const PROMPTS = [
   "Cyber Kangaroo In space, sci-fi style, purple colors",
   "OGANGE FUR, CYBER CAT WARRIOR PORTRAIT",

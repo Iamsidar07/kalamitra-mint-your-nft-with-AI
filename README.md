@@ -6,7 +6,7 @@
 
 ## Smart Contracts
 
-The smart contracts are written in Solidity and can be found in the `backend` folder.
+The smart contracts are written in Solidity and can be found in the `smart contract` folder.
 
 ## Getting Started
 

@@ -2,15 +2,14 @@
 import { MINTING_STATES } from "@/constants";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
-import React from "react";
-import Confetti from "react-confetti";
+import React, { useEffect, useState } from "react";
 import { GoLinkExternal } from "react-icons/go";
 import { IoCheckmarkDone } from "react-icons/io5";
 import { LuLoader2 } from "react-icons/lu";
 import { toast } from "react-toastify";
 import { useWindowSize } from "react-use";
 import Button from "./Button";
-import { CONTRACT_ADDRESS } from "./web3";
+import { CONTRACT_ADDRESS } from "@/constants";
 
 interface MintingState {
   uploading: boolean;
@@ -50,7 +49,15 @@ const Modal = ({
   mintedNft,
   nft,
 }: ModalProps) => {
-  const { width, height } = useWindowSize();
+  const [imageSrc, setImageSrc] = useState("");
+  useEffect(() => {
+    if (nft) {
+      const objectUrl = URL.createObjectURL(nft);
+      setImageSrc(objectUrl);
+
+      return () => URL.revokeObjectURL(objectUrl);
+    }
+  }, [nft]);
   return (
     <dialog
       ref={modalRef}
@@ -60,7 +67,7 @@ const Modal = ({
     >
       <div className="grid grid-cols-1 sm:grid-cols-2 relative">
         <Image
-          src={nft ? URL.createObjectURL(nft) : "/example1.png"}
+          src={nft ? imageSrc : "/example1.png"}
           alt="nft"
           fill
           className="object-cover absolute inset-0 -z-10 filter blur-lg"
@@ -69,7 +76,7 @@ const Modal = ({
         <div className="w-full h-full grid place-items-center">
           {nft ? (
             <Image
-              src={URL.createObjectURL(nft)}
+              src={imageSrc}
               alt="nft"
               width={1024}
               height={1024}
@@ -88,7 +95,7 @@ const Modal = ({
             className={cn(
               "p-5 flex flex-col absolute bottom-0 inset-x-0 bg-zinc-900/50  filter backdrop-blur-3xl translate-y-[110%] overflow-hidden h-[95%] rounded-t-2xl shadow z-50 transition-transform",
               {
-                "translate-y-0": isMinting,
+                "translate-y-0": isMinting || mintedNft,
               },
             )}
           >
@@ -142,9 +149,6 @@ const Modal = ({
                 </a>
               </div>
             ) : null}
-            {mintedNft && (
-              <Confetti run={!mintedNft} width={width} height={height} />
-            )}
           </div>
 
           {isMinting ? (
