@@ -10,7 +10,6 @@ import { toast } from "react-toastify";
 import Button from "./Button";
 import { CONTRACT_ADDRESS } from "@/constants";
 import { MdGraphicEq } from "react-icons/md";
-import { MintingState } from "@/app/page";
 
 interface ModalProps {
   isMinting: boolean;
@@ -21,7 +20,7 @@ interface ModalProps {
   setName: React.Dispatch<React.SetStateAction<string>>;
   description: string;
   setDescription: React.Dispatch<React.SetStateAction<string>>;
-  mintingState: MintingState;
+  currentMintingStateIndex: number;
   modalRef: React.RefObject<HTMLDialogElement>;
   onMintPressed: () => void;
   nft: File | null;
@@ -34,7 +33,7 @@ const Modal = ({
   isImageGenerationLoading,
   isMinting,
   modalRef,
-  mintingState,
+  currentMintingStateIndex,
   name,
   onMintPressed,
   setDescription,
@@ -52,6 +51,17 @@ const Modal = ({
       return () => URL.revokeObjectURL(objectUrl);
     }
   }, [nft]);
+
+  const getStepIcon = (stepIndex: number) => {
+    if (stepIndex < currentMintingStateIndex) {
+      return <IoCheckmarkDone className="text-teal-500" />;
+    } else if (stepIndex === currentMintingStateIndex) {
+      return <LuLoader2 className="animate-spin" />;
+    } else {
+      return <MdGraphicEq className="text-gray-700" />;
+    }
+  };
+
   return (
     <dialog
       ref={modalRef}
@@ -91,13 +101,7 @@ const Modal = ({
                 key={id}
                 className="flex items-center gap-2 text-zinc-500 p-4 ring-1 ring-gray-900"
               >
-                {mintingState === id ? (
-                  <LuLoader2 className="animate-spin" />
-                ) : !mintedNft ? (
-                  <IoCheckmarkDone className="text-teal-500" />
-                ) : (
-                  <MdGraphicEq className="text-gray-700" />
-                )}
+                {getStepIcon(i)}
                 <p>{text}</p>
               </div>
             ))}

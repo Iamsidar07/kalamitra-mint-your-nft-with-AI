@@ -7,13 +7,13 @@ import { toast } from "react-toastify";
 export const getNftMetadataUri = async ({
   mintFile,
   setStatus,
-  setMintingState,
+  setCurrentMintingState,
   name,
   description,
 }: {
   mintFile: File;
   setStatus: (status: string) => void;
-  setMintingState: React.Dispatch<React.SetStateAction<MintingState>>;
+  setCurrentMintingState: React.Dispatch<React.SetStateAction<number>>;
   name: string;
   description: string;
 }) => {
@@ -23,22 +23,22 @@ export const getNftMetadataUri = async ({
   setStatus("Uploading to pinata");
   try {
     // Upload to pinata
-    setMintingState("uploading");
+    setCurrentMintingState(0);
     const { ipfsHash } = await uploadToPinata(formData);
     formData.append("ipfsHash", ipfsHash);
     // generateMetadata
     setStatus("Generating nft metadata");
-    setMintingState("generatingMetadata");
+    setCurrentMintingState(1);
     const { metadata } = await generateMetadata(formData);
     // Upload metadata to pinata
     const generatedMetadata = {
       ...metadata,
       name,
       description,
-      external_url: "https://assassin-nft.vercel.app/",
+      external_url: "https://kalamitra-mint-your-nft-with-ai.vercel.app/",
     };
     setStatus("Uploading nft metadata to pinata");
-    setMintingState("uploadingMetadata");
+    setCurrentMintingState(2);
     const { ipfsHash: metadataIpfsHash } = await uploadMetadata(
       generatedMetadata
     );

@@ -7,7 +7,7 @@ import { MintingState } from "@/app/page";
 export const handleMintPressed = async ({
   contract,
   nft,
-  setMintingState,
+  setCurrentMintingState,
   setIsMinting,
   setStatus,
   setTransactionHash,
@@ -19,7 +19,7 @@ export const handleMintPressed = async ({
 }: {
   contract: ethers.Contract;
   nft: File;
-  setMintingState: React.Dispatch<React.SetStateAction<MintingState>>;
+  setCurrentMintingState: React.Dispatch<React.SetStateAction<number>>;
   setIsMinting: React.Dispatch<React.SetStateAction<boolean>>;
   setStatus: (status: string) => void;
   setTransactionHash: React.Dispatch<React.SetStateAction<string>>;
@@ -34,7 +34,7 @@ export const handleMintPressed = async ({
     const uri = await getNftMetadataUri({
       mintFile: nft,
       setStatus,
-      setMintingState,
+      setCurrentMintingState,
       name,
       description,
     });

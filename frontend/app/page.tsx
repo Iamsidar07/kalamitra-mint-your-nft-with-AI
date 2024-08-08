@@ -23,13 +23,13 @@ declare global {
     ethereum?: any;
   }
 }
-export type MintingState =
-  | "uploading"
-  | "generatingMetadata"
-  | "uploadingMetadata"
-  | "mintingNft"
-  | "importingNft"
-  | "success";
+export type MintingState = [
+  "uploading",
+  "generatingMetadata",
+  "uploadingMetadata",
+  "mintingNft",
+  "importingNft"
+];
 export default function Home() {
   const {
     contract,
@@ -49,7 +49,7 @@ export default function Home() {
   const [transactionHash, setTransactionHash] = useState("");
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [mintingState, setMintingState] = useState<MintingState>("uploading");
+  const [currentMintingStateIndex, setCurrentMintingState] = useState(0);
   const [hasMintedNft, setHasMintedNft] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
   const modalRef = useRef<HTMLDialogElement>(null);
@@ -113,7 +113,7 @@ export default function Home() {
 
   const importNftToMetamask = async () => {
     try {
-      setMintingState("importingNft");
+      setCurrentMintingState(4);
       const wasAdded = await window.ethereum.request({
         method: "wallet_watchAsset",
         params: {
@@ -151,7 +151,7 @@ export default function Home() {
     await handleMintPressed({
       contract,
       nft,
-      setMintingState,
+      setCurrentMintingState,
       setIsMinting,
       setStatus,
       setTransactionHash,
@@ -193,7 +193,7 @@ export default function Home() {
         setName={setName}
         description={description}
         setDescription={setDescription}
-        mintingState={mintingState}
+        currentMintingStateIndex={currentMintingStateIndex}
         modalRef={modalRef}
         onMintPressed={onMintPressed}
         nft={nft}
