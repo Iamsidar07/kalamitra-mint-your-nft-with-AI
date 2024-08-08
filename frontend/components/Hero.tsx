@@ -3,7 +3,7 @@ import Image from "next/image";
 const Hero = () => {
   return (
     <section className="flex flex-col items-center">
-      <span className="ring-2 ring-zinc-800 px-6 py-3 rounded-full text-zinc-400">
+      <span className="ring-1 ring-gray-800 px-6 py-3 rounded-full text-zinc-400">
         Welcome to the KalaMitra
       </span>
       <h1 className="text-2xl md:text-3xl lg:text-6xl font-bold text-center mt-6">

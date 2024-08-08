@@ -25,8 +25,8 @@ export default function RootLayout({
     <html lang="en">
       <body
         className={cn(
-          "bg-black -z-50 relative overflow-x-hidden",
-          lexend.className,
+          "bg-gray-950 -z-50 relative overflow-x-hidden",
+          lexend.className
         )}
       >
         <Web3Provider>
@@ -34,7 +34,7 @@ export default function RootLayout({
           {children}
         </Web3Provider>
         <ToastContainer
-          position="bottom-right"
+          position="top-center"
           autoClose={5000}
           hideProgressBar={false}
           newestOnTop={false}

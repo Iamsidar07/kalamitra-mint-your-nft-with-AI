@@ -37,11 +37,11 @@ const FeatureItem = ({
         }`}
       />
       <div className="space-y-4 p-4 sm:p-0">
-        <span className="text-xs sm:text-sm uppercase font-bold text-zinc-600 px-4 py-1 sm:py-1.5 rounded-full ring-1 ring-zinc-700">
+        <span className="text-xs sm:text-sm uppercase text-gray-500 px-4 py-1 sm:py-1.5 rounded-full ring-1 ring-gray-800">
           {tagline}
         </span>
-        <h2 className="text-lg md:text-6xl font-semibold">{title}</h2>
-        <p className="text-zinc-600 sm:text-lg">{description}</p>
+        <h2 className="text-lg md:text-6xl font-semibold capitalize">{title}</h2>
+        <p className="text-zinc-500 sm:text-lg">{description}</p>
       </div>
     </section>
   );

@@ -10,6 +10,7 @@ import { toast } from "react-toastify";
 import { useWindowSize } from "react-use";
 import Button from "./Button";
 import { CONTRACT_ADDRESS } from "@/constants";
+import { MdGraphicEq } from "react-icons/md";
 
 interface MintingState {
   uploading: boolean;
@@ -62,17 +63,10 @@ const Modal = ({
     <dialog
       ref={modalRef}
       className={cn(
-        "w-full bg-zinc-800/30 max-w-5xl mx-auto rounded-2xl backdrop:bg-zinc-800/60 backdrop-blur-xl",
+        "w-full bg-gray-950 max-w-5xl mx-auto rounded-2xl backdrop:bg-gray-950/70 ring-1 ring-gray-900/70"
       )}
     >
-      <div className="grid grid-cols-1 sm:grid-cols-2 relative">
-        <Image
-          src={nft ? imageSrc : "/example1.png"}
-          alt="nft"
-          fill
-          className="object-cover absolute inset-0 -z-10 filter blur-lg"
-        />
-        <div className="bg-black/80 absolute inset-0 -z-10" />
+      <div className="grid grid-cols-1 sm:grid-cols-2 divide-x divide-gray-900/70">
         <div className="w-full h-full grid place-items-center">
           {nft ? (
             <Image
@@ -93,21 +87,23 @@ const Modal = ({
         <div className="gap-4 p-4 text-white filter backdrop-blur flex flex-col relative overflow-hidden">
           <div
             className={cn(
-              "p-5 flex flex-col absolute bottom-0 inset-x-0 bg-zinc-900/50  filter backdrop-blur-3xl translate-y-[110%] overflow-hidden h-[95%] rounded-t-2xl shadow z-50 transition-transform",
+              "p-5 flex flex-col absolute bottom-0 inset-x-0 bg-gray-950  filter translate-y-[110%] overflow-hidden h-full rounded-t-2xl z-50 transition-transform gap-2",
               {
                 "translate-y-0": isMinting || mintedNft,
-              },
+              }
             )}
           >
             {MINTING_STATES.map(({ text, id }, i) => (
               <div
                 key={id}
-                className="flex items-center gap-2 font-bold text-lg text-zinc-500"
+                className="flex items-center gap-2 text-zinc-500 p-4 ring-1 ring-gray-900"
               >
-                {mintingState[id as keyof typeof mintingState] ? (
-                  <LuLoader2 className="opacity-80 animate-spin" />
+                {mintingState[id as keyof typeof mintingState] && !mintedNft ? (
+                  <LuLoader2 className="animate-spin" />
+                ) : mintedNft ? (
+                  <IoCheckmarkDone className="text-teal-500" />
                 ) : (
-                  <IoCheckmarkDone className="text-zinc-700" />
+                  <MdGraphicEq className="text-gray-700" />
                 )}
                 <p>{text}</p>
               </div>
@@ -125,34 +121,35 @@ const Modal = ({
                   {transactionHash.substring(0, 12)}...
                   {transactionHash.substring(50)}
                 </p>
-
-                <a
-                  href={`https://sepolia.etherscan.io/search?f=0&q=${transactionHash}`}
-                  target="_blank"
-                  className="bg-zinc-700/80 ring-zinc-700 ring-2 rounded-xl p-4 w-full flex items-center gap-2 justify-center text-lg hover:brightness-125"
-                >
-                  <GoLinkExternal className="text-zinc-500 w-6 h-6" />
-                  view on etherscan
-                </a>
-                <a
-                  href={`https://testnets.opensea.io/assets/sepolia/${CONTRACT_ADDRESS}/${currentTokenId}`}
-                  target="_blank"
-                  className=" ring-zinc-700 ring-2 rounded-xl p-4 w-full flex items-center gap-2 justify-center text-lg hover:brightness-125"
-                >
-                  <Image
-                    src="/opensea.png"
-                    alt="opensea"
-                    width={20}
-                    height={20}
-                  />
-                  view on Opensea
-                </a>
+                <div className="flex flex-col sm:flex-row items-center gap-4">
+                  <a
+                    href={`https://sepolia.etherscan.io/search?f=0&q=${transactionHash}`}
+                    target="_blank"
+                    className="bg-white ring-zinc-900 ring-1 rounded-md px-4 py-3.5 w-full flex items-center gap-2 justify-center hover:brightness-125"
+                  >
+                    <GoLinkExternal className="text-zinc-500 w-5 h-5" />
+                    view on etherscan
+                  </a>
+                  <a
+                    href={`https://testnets.opensea.io/assets/sepolia/${CONTRACT_ADDRESS}/${currentTokenId}`}
+                    target="_blank"
+                    className=" ring-gray-800 ring-1 rounded-md px-4 py-3.5 w-full flex items-center gap-2 justify-center hover:brightness-125"
+                  >
+                    <Image
+                      src="/opensea.png"
+                      alt="opensea"
+                      width={20}
+                      height={20}
+                    />
+                    view on Opensea
+                  </a>
+                </div>
               </div>
             ) : null}
           </div>
 
           {isMinting ? (
-            <div className="absolute inset-0 bg-zinc-900/35 blur-[17rem]"></div>
+            <div className="absolute inset-0 bg-gray-900/35 blur-[17rem]"></div>
           ) : (
             <>
               <input
@@ -162,7 +159,7 @@ const Modal = ({
                   setName(e.target.value);
                   e.stopPropagation();
                 }}
-                className="px-4 py-3 ring-2 ring-zinc-600 bg-transparent w-full rounded-xl outline-none focus-within:brightness-110"
+                className="px-4 py-3 ring-1 ring-gray-900/70 bg-transparent w-full rounded-xl outline-none focus-within:brightness-110"
               />
               <textarea
                 placeholder="Description of your nft"
@@ -171,7 +168,7 @@ const Modal = ({
                   setDescription(e.target.value);
                   e.stopPropagation();
                 }}
-                className="resize-none flex-1 px-4 py-3 ring-2 ring-zinc-600 bg-transparent w-full rounded-xl outline-none focus-within:brightness-110"
+                className="resize-none flex-1 px-4 py-3 ring-1 ring-gray-900/70 bg-transparent w-full rounded-xl outline-none focus-within:brightness-110"
                 rows={8}
               />
               <Button

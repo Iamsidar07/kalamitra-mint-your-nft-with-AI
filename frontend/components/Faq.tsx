@@ -25,7 +25,7 @@ const FAQS = [
   },
 ];
 const Faq = () => {
-  const [currentActive, setCurrentActive] = useState(-1);
+  const [currentActive, setCurrentActive] = useState(0);
   return (
     <section className="px-4 py-24">
       <h2 className="text-lg md:text-6xl font-bold text-center mb-12">

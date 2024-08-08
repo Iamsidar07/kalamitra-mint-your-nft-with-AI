@@ -19,7 +19,7 @@ const PromptExampleItem = ({
     toast("🫣 Prompt copied.");
   };
   return (
-    <div className="lg:h-72 flex flex-col lg:flex-row p-4 filter backdrop-blur-3xl bg-zinc-800/30 ring-2 ring-zinc-800/80 bg-opacity-10 rounded-lg gap-4">
+    <div className="lg:h-72 flex flex-col lg:flex-row p-4 filter backdrop-blur-3xl bg-zinc-800/30 ring-2 ring-gray-800/80 bg-opacity-10 rounded-lg gap-4">
       <Image
         src={imageUrl}
         alt={name}
