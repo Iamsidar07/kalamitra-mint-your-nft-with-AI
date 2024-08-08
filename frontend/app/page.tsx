@@ -23,7 +23,13 @@ declare global {
     ethereum?: any;
   }
 }
-
+export type MintingState =
+  | "uploading"
+  | "generatingMetadata"
+  | "uploadingMetadata"
+  | "mintingNft"
+  | "importingNft"
+  | "success";
 export default function Home() {
   const {
     contract,
@@ -43,13 +49,7 @@ export default function Home() {
   const [transactionHash, setTransactionHash] = useState("");
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [mintingState, setMintingState] = useState<IMintingState>({
-    uploading: false,
-    generatingMetadata: false,
-    uploadingMetadata: false,
-    mintingNft: false,
-    importingNft: false,
-  });
+  const [mintingState, setMintingState] = useState<MintingState>("uploading");
   const [hasMintedNft, setHasMintedNft] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
   const modalRef = useRef<HTMLDialogElement>(null);
@@ -113,6 +113,7 @@ export default function Home() {
 
   const importNftToMetamask = async () => {
     try {
+      setMintingState("importingNft");
       const wasAdded = await window.ethereum.request({
         method: "wallet_watchAsset",
         params: {
@@ -138,11 +139,6 @@ export default function Home() {
       toast.error("Failed to import nft in your wallet");
       throw error;
     } finally {
-      setMintingState((prev) => ({
-        ...prev,
-        importingNft: false,
-        mintingNft: false,
-      }));
       setIsMinting(false);
     }
   };

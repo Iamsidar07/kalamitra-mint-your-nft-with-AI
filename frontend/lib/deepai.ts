@@ -1,3 +1,4 @@
+import { MintingState } from "@/app/page";
 import { IMintingState } from "@/typing";
 import axios from "axios";
 import { ethers } from "ethers";
@@ -12,7 +13,7 @@ export const getNftMetadataUri = async ({
 }: {
   mintFile: File;
   setStatus: (status: string) => void;
-  setMintingState: React.Dispatch<React.SetStateAction<IMintingState>>;
+  setMintingState: React.Dispatch<React.SetStateAction<MintingState>>;
   name: string;
   description: string;
 }) => {
@@ -22,15 +23,13 @@ export const getNftMetadataUri = async ({
   setStatus("Uploading to pinata");
   try {
     // Upload to pinata
-    setMintingState((prev) => ({ ...prev, uploading: true }));
+    setMintingState("uploading");
     const { ipfsHash } = await uploadToPinata(formData);
-    setMintingState((prev) => ({ ...prev, uploading: false }));
     formData.append("ipfsHash", ipfsHash);
     // generateMetadata
     setStatus("Generating nft metadata");
-    setMintingState((prev) => ({ ...prev, generatingMetadata: true }));
+    setMintingState("generatingMetadata");
     const { metadata } = await generateMetadata(formData);
-    setMintingState((prev) => ({ ...prev, generatingMetadata: false }));
     // Upload metadata to pinata
     const generatedMetadata = {
       ...metadata,
@@ -39,10 +38,10 @@ export const getNftMetadataUri = async ({
       external_url: "https://assassin-nft.vercel.app/",
     };
     setStatus("Uploading nft metadata to pinata");
-    setMintingState((prev) => ({ ...prev, uploadingMetadata: true }));
-    const { ipfsHash: metadataIpfsHash } =
-      await uploadMetadata(generatedMetadata);
-    setMintingState((prev) => ({ ...prev, uploadingMetadata: false }));
+    setMintingState("uploadingMetadata");
+    const { ipfsHash: metadataIpfsHash } = await uploadMetadata(
+      generatedMetadata
+    );
     const uri = "ipfs://" + metadataIpfsHash;
     return uri;
   } catch (error) {

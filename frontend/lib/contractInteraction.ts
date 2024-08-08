@@ -2,6 +2,7 @@ import { IMintingState } from "@/typing";
 import { ethers } from "ethers";
 import { toast } from "react-toastify";
 import { getNftMetadataUri } from "./deepai";
+import { MintingState } from "@/app/page";
 
 export const handleMintPressed = async ({
   contract,
@@ -18,7 +19,7 @@ export const handleMintPressed = async ({
 }: {
   contract: ethers.Contract;
   nft: File;
-  setMintingState: React.Dispatch<React.SetStateAction<IMintingState>>;
+  setMintingState: React.Dispatch<React.SetStateAction<MintingState>>;
   setIsMinting: React.Dispatch<React.SetStateAction<boolean>>;
   setStatus: (status: string) => void;
   setTransactionHash: React.Dispatch<React.SetStateAction<string>>;
@@ -29,13 +30,6 @@ export const handleMintPressed = async ({
   description: string;
 }) => {
   setIsMinting(true);
-  // setMintingState({
-  //   generatingMetadata: true,
-  //   mintingNft: true,
-  //   uploading: true,
-  //   uploadingMetadata: true,
-  //   importingNft: true,
-  // });
   try {
     const uri = await getNftMetadataUri({
       mintFile: nft,
@@ -59,12 +53,5 @@ export const handleMintPressed = async ({
   } catch (error) {
     console.log("error", error);
     toast.error("Failed to mint your nft");
-    setMintingState({
-      generatingMetadata: false,
-      mintingNft: false,
-      uploading: false,
-      uploadingMetadata: false,
-      importingNft: false,
-    });
   }
 };

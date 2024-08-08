@@ -7,17 +7,10 @@ import { GoLinkExternal } from "react-icons/go";
 import { IoCheckmarkDone } from "react-icons/io5";
 import { LuLoader2 } from "react-icons/lu";
 import { toast } from "react-toastify";
-import { useWindowSize } from "react-use";
 import Button from "./Button";
 import { CONTRACT_ADDRESS } from "@/constants";
 import { MdGraphicEq } from "react-icons/md";
-
-interface MintingState {
-  uploading: boolean;
-  generatingMetadata: boolean;
-  uploadingMetadata: boolean;
-  mintingNft: boolean;
-}
+import { MintingState } from "@/app/page";
 
 interface ModalProps {
   isMinting: boolean;
@@ -98,9 +91,9 @@ const Modal = ({
                 key={id}
                 className="flex items-center gap-2 text-zinc-500 p-4 ring-1 ring-gray-900"
               >
-                {mintingState[id as keyof typeof mintingState] && !mintedNft ? (
+                {mintingState === id ? (
                   <LuLoader2 className="animate-spin" />
-                ) : mintedNft ? (
+                ) : !mintedNft ? (
                   <IoCheckmarkDone className="text-teal-500" />
                 ) : (
                   <MdGraphicEq className="text-gray-700" />
